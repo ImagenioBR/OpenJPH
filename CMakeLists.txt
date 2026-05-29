@@ -98,13 +98,25 @@ if (MSVC)
   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 endif()
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-  add_compile_options(
-  -fexceptions 
-  -Wall 
-  -Wextra 
-  -Wconversion 
-  -Wunused-parameter
-  )
+  # Imagenio fork: -fwasm-exceptions apenas no caminho EMSCRIPTEN (WASM native exceptions),
+  # -fexceptions no native build (compatibilidade upstream).
+  if(EMSCRIPTEN)
+    add_compile_options(
+    -fwasm-exceptions
+    -Wall
+    -Wextra
+    -Wconversion
+    -Wunused-parameter
+    )
+  else()
+    add_compile_options(
+    -fexceptions
+    -Wall
+    -Wextra
+    -Wconversion
+    -Wunused-parameter
+    )
+  endif()
 endif()
 
 ## Enhanced instruction options

@@ -33,7 +33,8 @@ source_group("others"            FILES ${OTHERS})
 source_group("transform"         FILES ${TRANSFORM})
 
 if(EMSCRIPTEN)
-  add_compile_options(-std=c++11 -O3 -fexceptions)
+  # Imagenio fork: -fwasm-exceptions em vez de -fexceptions (WASM native exceptions).
+  add_compile_options(-std=c++11 -O3 -fwasm-exceptions)
   add_library(openjph ${SOURCES})
   add_library(openjphsimd ${SOURCES} ${CODESTREAM_WASM} ${CODING_WASM} ${TRANSFORM_WASM})
 
